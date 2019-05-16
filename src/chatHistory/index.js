@@ -1,13 +1,15 @@
 import ChatHistory from './schema';
 
 
-const getChatHistory = async () => {
-  const result = await ChatHistory.find();
+const getChatHistory = async (filter) => {
+  const result = await ChatHistory.find(filter);
   return result;
 };
 
 const insertChat = async (data) => {
-  const chat = new ChatHistory(data);
+  const doc = Object.assign(data);
+  doc.timeStamp = new Date();
+  const chat = new ChatHistory(doc);
   await chat.save();
 };
 module.exports = {
